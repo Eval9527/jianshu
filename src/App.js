@@ -1,10 +1,15 @@
 import React from 'react';
+import Header from "./common/header";
+import {Globalstyle} from "./style";
+import {GlobalIconfont} from './statics/iconfont/iconfont'
 
 function App() {
   return (
-    <div>
-      hello world
-    </div>
+      <React.Fragment>
+        <Globalstyle/>
+        <GlobalIconfont/>
+        <Header/>
+      </React.Fragment>
   );
 }
 
