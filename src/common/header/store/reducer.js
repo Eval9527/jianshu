@@ -1,22 +1,17 @@
 import * as constants from './constants'
+import { fromJS } from "immutable";
 
-const defaultState = {
+const defaultState = fromJS({
   focused: false
-}
+})
 
 export default (state = defaultState, action) => {
-  const newState = JSON.parse(JSON.stringify(state))
-
   switch (action.type) {
     case constants.SEARCH_FOCUS:
-      newState.focused = true
-      break
+      return state.set('focused', true)
     case constants.SEARCH_BLUR:
-      newState.focused = false
-      break
+      return state.set('focused', false)
     default:
-      break
+      return state
   }
-
-  return newState
 }
