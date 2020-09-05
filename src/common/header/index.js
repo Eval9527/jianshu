@@ -22,22 +22,31 @@ import {
 class Header extends Component {
 
   render() {
-    const { focused, list, handleInputFocus, handleInputBlur } = this.props
+    const { focused, list, page, totalPage, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props
+    const newList = list.toJS()
+    const pageList = []
+
+    if (newList.length) {
+      for (let i = (page - 1) * 10; i < page * 10; i ++) {
+        pageList.push(
+            <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+        )
+      }
+    }
 
     const getListArea = (show, list) => {
-      if (show) {
+      if (show || mouseIn) {
         return (
-            <SearchInfo>
+            <SearchInfo
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
               <SearchInfoTitle>
                 热门搜索
-                <SearchInfoSwitch>换一换</SearchInfoSwitch>
+                <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>换一换</SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
-                {
-                  list.map((item) => {
-                    return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                  })
-                }
+                {pageList}
               </SearchInfoList>
             </SearchInfo>
         )
@@ -88,6 +97,9 @@ const mapStateToProps = (state) => {
   return {
     focused: state.getIn(['header', 'focused']),
     list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
   }
 }
 
@@ -100,6 +112,19 @@ const mapDispatchToProps = (dispatch) => {
 
     handleInputBlur() {
       dispatch(actionCreators.searchBlur())
+    },
+
+    handleMouseEnter() {
+      dispatch(actionCreators.mouseEnter())
+    },
+
+    handleMouseLeave() {
+      dispatch(actionCreators.mouseLeave())
+    },
+
+    handleChangePage(page, totalPage) {
+      const newPage = page < totalPage ? page + 1 : 1
+      dispatch(actionCreators.changePage(newPage))
     },
   }
 }
