@@ -43,7 +43,10 @@ class Header extends Component {
             >
               <SearchInfoTitle>
                 热门搜索
-                <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>换一换</SearchInfoSwitch>
+                <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, this.spinIcon)}>
+                  <i ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe63f;</i>
+                  换一换
+                </SearchInfoSwitch>
               </SearchInfoTitle>
               <SearchInfoList>
                 {pageList}
@@ -73,11 +76,11 @@ class Header extends Component {
               >
                 <NavSearch
                     className={focused ? 'focused' : ''}
-                    onFocus={handleInputFocus}
+                    onFocus={() => handleInputFocus(list)}
                     onBlur={handleInputBlur}
                 />
               </CSSTransition>
-              <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe623;</i>
+              <i className={focused ? 'focused iconfont zoom' : 'iconfont zoom'}>&#xe623;</i>
               {getListArea(focused, list)}
             </SearchWrapper>
 
@@ -105,8 +108,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getList())
+    handleInputFocus(list) {
+      if (list.size === 0) {
+        dispatch(actionCreators.getList())
+      }
       dispatch(actionCreators.searchFocus())
     },
 
@@ -122,7 +127,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionCreators.mouseLeave())
     },
 
-    handleChangePage(page, totalPage) {
+    handleChangePage(page, totalPage, spin) {
+      let originAngle = spin.style.transform.replace(/[^0-9]/ig, '')
+      originAngle = originAngle ? Number(originAngle) : 0
+
+      spin.style.transform = `rotate(${originAngle+360}deg)`
+
       const newPage = page < totalPage ? page + 1 : 1
       dispatch(actionCreators.changePage(newPage))
     },

@@ -105,7 +105,7 @@ export const SearchWrapper = styled.div`
   .slide.exit-active .slide.exit-done {
     width: 160px;
   }
-  .iconfont {
+  .zoom {
     position: absolute;
     right: 5px;
     bottom: 5px;
@@ -140,6 +140,16 @@ export const SearchInfoTitle = styled.div`
 export const SearchInfoSwitch = styled.span`
   float: right;
   font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+  .spin {
+    display: block;
+    float: left;
+    font-size: 12px;
+    margin-right: 2px;
+    transition: all .2s ease-in;
+    transform-origin: center center;
+  }
 `
 
 export const SearchInfoItem = styled.a`
