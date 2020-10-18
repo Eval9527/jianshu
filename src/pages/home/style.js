@@ -18,7 +18,7 @@ export const HomeLeft = styled.div`
 `
 
 export const HomeRight = styled.div`
-  width: 240px;
+  width: 280px;
   float: right;
 `
 
@@ -78,5 +78,54 @@ export const ListInfo = styled.div`
     line-height: 24px;
     font-size: 13px;
     color: #999;
+  }
+`
+
+export const RecommendWrapper = styled.div`
+  margin: 30px 0;
+  width: 280px;
+`
+
+export const RecommendItem = styled.div`
+  width: 280px;
+  height: 50px;
+  background: url(${(props) => props.imgUrl});
+  background-size: contain;
+`
+
+export const WriterWrapper = styled.div`
+  width: 278px;
+  border-radius: 3px;
+  .title {
+    span {
+      font-size: 14px;
+      color: #969696;
+    }
+  }
+`
+
+export const WriterItem = styled.div`
+  display: flex;
+  height: 48px;
+  margin-top: 20px;
+  img {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+  }
+  .info {
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    .name {
+      color: #333;
+      font-size: 14px;
+    }
+    .desc {
+      color: #969696;
+      font-size: 12px;
+    }
   }
 `
