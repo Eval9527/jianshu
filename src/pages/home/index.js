@@ -4,7 +4,7 @@ import Topic from "./component/Topic";
 import List from "./component/List";
 import Recommend from "./component/Recommend";
 import Writer from "./component/Writer";
-import axios from "axios"
+import { actionCreators } from './store'
 
 import {
   HomeWrapper,
@@ -29,23 +29,13 @@ class Home extends Component {
      )
    }
    componentDidMount() {
-     axios.get('/api/home.json')
-       .then(res => {
-         const data = res.data.data
-         const action = {
-           type: 'change_home_data',
-           topicList: data.topicList,
-           articleList: data.articleList,
-           recommendList: data.recommendList,
-           writerList: data.writerList,
-         }
-        this.props.changeHomeData(action)
-       })
+    this.props.changeHomeData()
    }
 }
 
 const mapDispatch = dispatch => ({
-  changeHomeData(action) {
+  changeHomeData() {
+    const action = actionCreators.getHomeInfo()
     dispatch(action)
   }
 })

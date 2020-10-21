@@ -30,11 +30,11 @@ export const changePage = (page) => ({
 })
 
 export const getList = () => {
-  return (dispath) => {
+  return (dispatch) => {
     axios.get('/api/header-list.json')
         .then((res) => {
           const data = res.data
-          dispath(changeList(data.data))
+          dispatch(changeList(data.data))
         })
         .catch( () => {
           console.log('error')
