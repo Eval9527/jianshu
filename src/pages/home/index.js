@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from 'react-redux'
 import Topic from "./component/Topic";
 import List from "./component/List";
@@ -13,7 +13,7 @@ import {
   HomeRight
 } from "./style";
 
-class Home extends Component {
+class Home extends PureComponent {
    render() {
      return (
        <HomeWrapper>
