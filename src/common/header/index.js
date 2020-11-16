@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { actionCreators } from './store'
+import { actionCreators as loginActionCreators } from '../../pages/login/store'
 import { connect } from 'react-redux'
 import { CSSTransition } from 'react-transition-group';
 import { Link } from "react-router-dom";
@@ -23,7 +24,10 @@ import {
 class Header extends Component {
 
   render() {
-    const { focused, list, page, totalPage, mouseIn, handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props
+    const {
+      focused, list, page, totalPage, mouseIn, login,
+      handleInputFocus, handleInputBlur, handleMouseEnter, handleMouseLeave, handleChangePage, handleLogout
+    } = this.props
     const newList = list.toJS()
     const pageList = []
 
@@ -67,7 +71,11 @@ class Header extends Component {
           <Nav>
             <NavItem className='left active'>首页</NavItem>
             <NavItem className='left'>下载App</NavItem>
-            <NavItem className='right'>登陆</NavItem>
+            {
+              login
+                ? <NavItem className='right' onClick={handleLogout}>退出</NavItem>
+                : <Link to='/login'><NavItem className='right'>登陆</NavItem></Link>
+            }
             <NavItem className='right'>
               <i className="iconfont">&#xe636;</i>
             </NavItem>
@@ -106,6 +114,7 @@ const mapStateToProps = (state) => {
     page: state.getIn(['header', 'page']),
     totalPage: state.getIn(['header', 'totalPage']),
     mouseIn: state.getIn(['header', 'mouseIn']),
+    login: state.getIn(['login', 'login']),
   }
 }
 
@@ -139,6 +148,9 @@ const mapDispatchToProps = (dispatch) => {
       const newPage = page < totalPage ? page + 1 : 1
       dispatch(actionCreators.changePage(newPage))
     },
+    handleLogout() {
+      dispatch(loginActionCreators.logout())
+    }
   }
 }
 
